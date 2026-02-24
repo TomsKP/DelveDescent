@@ -50,7 +50,7 @@ MenuResult MainMenu::HandleEvent(const SDL_Event& event) {
 
 void MainMenu::Render() {
 	for (int i = 0; i < items.size(); i++) {
-		RenderItem(items[i], 200 + (i * 150), 200, i == selectedIndex);
+		RenderItem(items[i], 500 + (i * 150), 300, i == selectedIndex);
 	}
 }
 
