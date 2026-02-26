@@ -18,12 +18,15 @@ private:
 	SDL_Renderer* renderer;
 	TTF_Font* font;
 	std::vector<Entity> enemies;
+	std::vector<SDL_Surface*> enemySprites;
+	std::vector<SDL_Surface*> tileSprites;
+	SDL_Surface* playerSprite = IMG_Load("assets/images/character.png");
 
 	Entity player = Entity(3, 3, 10, 2, 1, "assets/images/character.png");
 
 	std::vector<std::vector<int>> map;
 
-	void RenderTile(const char* spriteFile, int x, int y);
-	void RenderEntity(const char* spriteFile, int x, int y);
+	void RenderTile(SDL_Surface* sprite, int x, int y);
+	void RenderEntity(SDL_Surface* sprite, int x, int y);
 	
 };

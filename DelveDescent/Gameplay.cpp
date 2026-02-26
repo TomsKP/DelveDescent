@@ -34,29 +34,36 @@ void Gameplay::Render() {
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 6; j++) {
 			if (map[i][j] == 0) {
-				RenderTile("assets/images/stonefloor.png", 560 + (32 * j), 200 + (32 * i));
+				RenderTile(tileSprites[0], 560 + (32 * j), 200 + (32 * i));
 				if (i == player.GetX() && j == player.GetY()) {
-					RenderEntity(player.GetSprite(), 560 + (32 * j), 200 + (32 * i));
+					RenderEntity(playerSprite, 560 + (32 * j), 200 + (32 * i));
 				}
-				if (i == enemies[0].GetX() && j == enemies[0].GetY()) {
-					RenderEntity(enemies[0].GetSprite(), 560 + (32 * j), 200 + (32 * i));
+				for (int x = 0; x < enemies.size(); x++) {
+					if (i == enemies[0].GetX() && j == enemies[0].GetY()) {
+						RenderEntity(enemySprites[x], 560 + (32 * j), 200 + (32 * i));
+					}
 				}
 				continue;
 			}
-			RenderTile("assets/images/stonefloor.png", 560 + (32 * j), 200 + (32 * i));
-			if (i == player.GetX() && j == player.GetY()) {
-				RenderEntity(player.GetSprite(), 560 + (32 * j), 200 + (32 * i));
+			else if (map[i][j] == 1) {
+				RenderTile(tileSprites[1], 560 + (32 * j), 200 + (32 * i));
+				if (i == player.GetX() && j == player.GetY()) {
+					RenderEntity(playerSprite, 560 + (32 * j), 200 + (32 * i));
+				}
+				for (int x = 0; x < enemies.size(); x++) {
+					if (i == enemies[0].GetX() && j == enemies[0].GetY()) {
+						RenderEntity(enemySprites[x], 560 + (32 * j), 200 + (32 * i));
+					}
+				}
+				continue;
 			}
-			if (i == enemies[0].GetX() && j == enemies[0].GetY()) {
-				RenderEntity(enemies[0].GetSprite(), 560 + (32 * j), 200 + (32 * i));
-			}
-			continue;
+			
 		}
 	}
 }
 
-void Gameplay::RenderTile(const char* spriteFile, int x, int y) {
-	SDL_Surface* surface = IMG_Load(spriteFile);
+void Gameplay::RenderTile(SDL_Surface* sprite, int x, int y) {
+	SDL_Surface* surface = sprite;
 	std::cout << SDL_GetError();
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -70,8 +77,8 @@ void Gameplay::RenderTile(const char* spriteFile, int x, int y) {
 	SDL_DestroyTexture(texture);
 }
 
-void Gameplay::RenderEntity(const char* spriteFile, int x, int y) {
-	SDL_Surface* surface = IMG_Load(spriteFile);
+void Gameplay::RenderEntity(SDL_Surface* sprite, int x, int y) {
+	SDL_Surface* surface = sprite;
 	std::cout << SDL_GetError();
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -90,6 +97,9 @@ void Gameplay::LoadLevel(int level) {
 		level1 currentLevel;
 		enemies.push_back(currentLevel.enemy0);
 		map = currentLevel.map1;
+		enemySprites.push_back(IMG_Load(currentLevel.enemy0.GetSprite()));
+		tileSprites.push_back(IMG_Load("assets/images/stonefloor.png"));
+		tileSprites.push_back(IMG_Load("assets/images/stonefloor.png"));
 	}
 }
 
