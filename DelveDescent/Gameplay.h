@@ -12,15 +12,18 @@ public:
 	void HandleEvent(const SDL_Event& event);
 	void Update();
 	void Render();
+	void LoadLevel(int level);
 
 private:
 	SDL_Renderer* renderer;
 	TTF_Font* font;
+	std::vector<Entity> enemies;
 
 	Entity player = Entity(3, 3, 10, 2, 1, "assets/images/character.png");
 
-	std::vector<std::vector<int>> map = { {0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1}, {1, 0, 1, 0, 1, 0} };
+	std::vector<std::vector<int>> map;
 
 	void RenderTile(const char* spriteFile, int x, int y);
-	void RenderCharacter(const char* spriteFile, int x, int y);
+	void RenderEntity(const char* spriteFile, int x, int y);
+	
 };

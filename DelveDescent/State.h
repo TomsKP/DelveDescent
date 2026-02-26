@@ -12,6 +12,9 @@ public:
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 
+	virtual void OnEnter() {};
+	virtual void OnExit() {};
+
 	//Used to know if the state is to be transparent. In the state stack, this would be used to decide whether or not to render the next state in the stack
 	//For example, a pause screen that allows you to see the paused game screen in the background
 	virtual bool IsTransparent() const { return false; };

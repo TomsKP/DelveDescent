@@ -1,5 +1,6 @@
 #include "Gameplay.h"
 #include <iostream>
+#include "Level1.cpp"
 
 Gameplay::Gameplay(SDL_Renderer* renderer, TTF_Font* font) : renderer(renderer), font(font) {};
 
@@ -7,6 +8,9 @@ void Gameplay::HandleEvent(const SDL_Event& event) {
 	if (event.type == SDL_EVENT_KEY_DOWN) {
 		switch (event.key.key) {
 		case SDLK_UP:
+			if (player.GetX() - 1 == enemies[0].GetX() && player.GetY() == enemies[0].GetY()) {
+				enemies[0].SetX(enemies[0].GetX() - 1);
+			}
 			player.SetX(player.GetX() - 1);
 			break;
 		case SDLK_DOWN:
@@ -32,13 +36,19 @@ void Gameplay::Render() {
 			if (map[i][j] == 0) {
 				RenderTile("assets/images/stonefloor.png", 560 + (32 * j), 200 + (32 * i));
 				if (i == player.GetX() && j == player.GetY()) {
-					RenderCharacter("assets/images/character.png", 560 + (32 * j), 200 + (32 * i));
+					RenderEntity(player.GetSprite(), 560 + (32 * j), 200 + (32 * i));
+				}
+				if (i == enemies[0].GetX() && j == enemies[0].GetY()) {
+					RenderEntity(enemies[0].GetSprite(), 560 + (32 * j), 200 + (32 * i));
 				}
 				continue;
 			}
 			RenderTile("assets/images/stonefloor.png", 560 + (32 * j), 200 + (32 * i));
 			if (i == player.GetX() && j == player.GetY()) {
-				RenderCharacter("assets/images/character.png", 560 + (32 * j), 200 + (32 * i));
+				RenderEntity(player.GetSprite(), 560 + (32 * j), 200 + (32 * i));
+			}
+			if (i == enemies[0].GetX() && j == enemies[0].GetY()) {
+				RenderEntity(enemies[0].GetSprite(), 560 + (32 * j), 200 + (32 * i));
 			}
 			continue;
 		}
@@ -60,7 +70,7 @@ void Gameplay::RenderTile(const char* spriteFile, int x, int y) {
 	SDL_DestroyTexture(texture);
 }
 
-void Gameplay::RenderCharacter(const char* spriteFile, int x, int y) {
+void Gameplay::RenderEntity(const char* spriteFile, int x, int y) {
 	SDL_Surface* surface = IMG_Load(spriteFile);
 	std::cout << SDL_GetError();
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -73,5 +83,13 @@ void Gameplay::RenderCharacter(const char* spriteFile, int x, int y) {
 
 	SDL_RenderTexture(renderer, texture, nullptr, &dstRect);
 	SDL_DestroyTexture(texture);
+}
+
+void Gameplay::LoadLevel(int level) {
+	if (level == 1) {
+		level1 currentLevel;
+		enemies.push_back(currentLevel.enemy0);
+		map = currentLevel.map1;
+	}
 }
 

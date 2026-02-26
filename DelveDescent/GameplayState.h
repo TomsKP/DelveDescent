@@ -11,6 +11,8 @@ public:
 	void Update() override;
 	void Render() override;
 
+	void OnEnter() override;
+
 private:
 	StateManager& manager;
 	Gameplay game;

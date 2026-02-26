@@ -134,6 +134,7 @@
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="GameplayState.cpp" />
     <ClCompile Include="InitSDL.cpp" />
+    <ClCompile Include="Level1.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuState.cpp" />

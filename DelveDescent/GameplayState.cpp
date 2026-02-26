@@ -13,6 +13,10 @@ void GameplayState::HandleEvent(const SDL_Event& event) {
 	}
 }
 
+void GameplayState::OnEnter() {
+	game.LoadLevel(1);
+}
+
 void GameplayState::Update() {
 
 }
